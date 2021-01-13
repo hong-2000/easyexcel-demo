@@ -6,14 +6,20 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.example.easyexcel.config.DemoDataListener;
+import com.example.easyexcel.config.ReadExcelListener;
 import com.example.easyexcel.po.DemoData;
+import com.example.easyexcel.po.ExcelPO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.example.easyexcel.utils.SetData.data;
+import static com.example.easyexcel.utils.SetData.dataTwo;
 
 @SpringBootTest
 class EasyExcelApplicationTests {
+
+    String fileName = "src\\test\\java\\com\\example\\easyexcel\\xlsx\\demoData.xlsx";
+    String fileNameTwo = "src\\test\\java\\com\\example\\easyexcel\\xlsx\\ExcelPO.xlsx";
 
     @Test
     void contextLoads() {
@@ -27,14 +33,12 @@ class EasyExcelApplicationTests {
      */
     @Test
     void simpleReadOne() {
-        String fileName = "src\\test\\java\\com\\example\\easyexcel\\xxx.xlsx";
         // 这里需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
         EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
     }
 
     @Test
     void simpleReadTwo() {
-        String fileName = "src\\test\\java\\com\\example\\easyexcel\\xxx.xlsx";
         ExcelReader excelReader = null;
         try {
             excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build();
@@ -50,17 +54,24 @@ class EasyExcelApplicationTests {
 
     @Test
     void simpleWriteOne() {
-        String fileName = "src\\test\\java\\com\\example\\easyexcel\\xxx.xlsx";
-        EasyExcel.write(fileName, DemoData.class).sheet("写入方法一").doWrite(data());
+        //EasyExcel.write(fileName, DemoData.class).sheet("写入方法一").doWrite(data());
+        EasyExcel.write(fileNameTwo, ExcelPO.class).sheet("写入方法一").doWrite(dataTwo());
     }
 
     @Test
     void simpleWriteTwo() {
-        String fileName = "src\\test\\java\\com\\example\\easyexcel\\xxx.xlsx";
+
         ExcelWriter excelWriter = EasyExcel.write(fileName, DemoData.class).build();
         WriteSheet writeSheet = EasyExcel.writerSheet("写入方法二").build();
         excelWriter.write(data(), writeSheet);
         /// 关闭流
         excelWriter.finish();
     }
+
+    @Test
+    void ReadExcel() {
+        // 这里需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        EasyExcel.read(fileNameTwo, ExcelPO.class, new ReadExcelListener()).sheet().doRead();
+    }
+
 }
