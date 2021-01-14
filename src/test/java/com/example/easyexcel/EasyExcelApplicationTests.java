@@ -12,8 +12,10 @@ import com.example.easyexcel.po.ExcelPO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.example.easyexcel.utils.SetData.data;
-import static com.example.easyexcel.utils.SetData.dataTwo;
+import java.io.File;
+
+import static com.example.easyexcel.utils.SetData.setDemoData;
+import static com.example.easyexcel.utils.SetData.setExcelPoData;
 
 @SpringBootTest
 class EasyExcelApplicationTests {
@@ -55,7 +57,7 @@ class EasyExcelApplicationTests {
     @Test
     void simpleWriteOne() {
         //EasyExcel.write(fileName, DemoData.class).sheet("写入方法一").doWrite(data());
-        EasyExcel.write(fileNameTwo, ExcelPO.class).sheet("写入方法一").doWrite(dataTwo());
+        EasyExcel.write(fileNameTwo, ExcelPO.class).sheet("写入方法一").doWrite(setExcelPoData());
     }
 
     @Test
@@ -63,15 +65,31 @@ class EasyExcelApplicationTests {
 
         ExcelWriter excelWriter = EasyExcel.write(fileName, DemoData.class).build();
         WriteSheet writeSheet = EasyExcel.writerSheet("写入方法二").build();
-        excelWriter.write(data(), writeSheet);
+        excelWriter.write(setDemoData(), writeSheet);
         /// 关闭流
         excelWriter.finish();
     }
 
+    /**
+     * 运用泛型 做统一监听器
+     * 只有读取文件的时候才会需要监听器
+     *
+     * @return: void
+     * @Version 1.0
+     * @author hong-2000
+     * @date 2021/1/13 17:49
+     */
     @Test
     void ReadExcel() {
         // 这里需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
         EasyExcel.read(fileNameTwo, ExcelPO.class, new ReadExcelListener()).sheet().doRead();
+    }
+
+    @Test
+    void ReadFile() {
+        // 这里需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        File file = new File(fileNameTwo);
+        EasyExcel.read(file, ExcelPO.class, new ReadExcelListener()).sheet().doRead();
     }
 
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author hong-2000
+ * @description 指定列的下标或者列名
  */
 @Data
 @NoArgsConstructor

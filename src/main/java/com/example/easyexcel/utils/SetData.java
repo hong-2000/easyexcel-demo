@@ -20,8 +20,8 @@ public class SetData {
     private SetData() {
     }
 
-    public static List<DemoData> data() {
-        int count = 10;
+    public static List<DemoData> setDemoData() {
+        int count = 11;
         List<DemoData> list = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             list.add(DemoData.builder().name("test").age(i).birthday(new Date()).build());
@@ -29,7 +29,7 @@ public class SetData {
         return list;
     }
 
-    public static List<ExcelPO> dataTwo() {
+    public static List<ExcelPO> setExcelPoData() {
         int count = 10;
         List<ExcelPO> list = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {

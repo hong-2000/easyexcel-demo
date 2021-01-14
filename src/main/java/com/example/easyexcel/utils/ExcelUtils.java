@@ -2,37 +2,39 @@ package com.example.easyexcel.utils;
 
 import com.alibaba.excel.EasyExcel;
 import com.example.easyexcel.config.ReadExcelListener;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author hong-2000
+ */
+@Slf4j
 public class ExcelUtils {
     /**
      * 读Excel操作
      *
-     * @param file
+     * @param multipartFile
      * @param cls
      * @param listener
      * @param <T>
      * @return
      */
-    public static <T> List<T> readExcel(MultipartFile file, Class<T> cls, ReadExcelListener<T> listener) {
-        List<T> data = new ArrayList<>();
+    public static <T> List<T> readExcel(MultipartFile multipartFile, Class<T> cls, ReadExcelListener<T> listener) {
         try {
-            EasyExcel.read(file.getInputStream(), cls, listener).sheet().doRead();
-            //根据实际业务需求来选择，是否有返回值
-            data = listener.getData();
+            EasyExcel.read(multipartFile.getInputStream(), cls, listener).sheet().doRead();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // 根据实际业务需求来选择，是否有返回值
+        List<T> data = listener.getData();
         return data;
     }
-
 
     /**
      * 写Excel操作
@@ -45,12 +47,11 @@ public class ExcelUtils {
      */
     public static <T> void writeExcel(HttpServletResponse response, String fileName, Class<T> cls, List<T> dataList) {
         try {
-            EasyExcel.write(getOutputStream(fileName, response), cls).sheet("sheet1").doWrite(dataList);
+            EasyExcel.write(getOutputStream(fileName, response), cls).sheet("write").doWrite(dataList);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     /**
      * 导出文件时为Writer生成OutputStream
