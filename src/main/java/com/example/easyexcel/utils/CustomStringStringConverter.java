@@ -14,7 +14,7 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
  */
 public class CustomStringStringConverter implements Converter<String> {
     /**
-     * 支持Java类型键
+     * 支持 Java 类型键
      *
      * @return
      */
@@ -24,7 +24,7 @@ public class CustomStringStringConverter implements Converter<String> {
     }
 
     /**
-     * 支持Excel类型键
+     * 支持 Excel 类型键
      *
      * @return
      */
