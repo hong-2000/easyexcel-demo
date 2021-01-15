@@ -1,5 +1,6 @@
 package com.example.easyexcel.po;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,4 +37,10 @@ public class ExcelPO {
 
     @ExcelProperty(value = "只为加一列", index = 3)
     private String column;
+
+    /**
+     * 忽略这个字段
+     */
+    @ExcelIgnore
+    private String ignore;
 }

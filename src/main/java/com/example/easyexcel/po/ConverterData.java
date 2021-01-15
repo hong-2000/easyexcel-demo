@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author hong-2000
  * @version 1.0
@@ -21,20 +23,20 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ConverterData {
     /**
-     * 我自定义 转换器，不管数据库传过来什么 。我给他加上“自定义：”
+     * 我想所有的 字符串起前面加上"自定义："三个字
      */
-    @ExcelProperty(value = "name", converter = CustomStringStringConverter.class, index = 0)
+    @ExcelProperty(value = "字符串标题", converter = CustomStringStringConverter.class)
     private String string;
     /**
-     * 这里用string 去接日期才能格式化。我想接收年月日格式
+     * 我想写到excel 用年月日的格式
      */
-    @ExcelProperty(value = "birthday", index = 2)
     @DateTimeFormat("yyyy年MM月dd日HH时mm分ss秒")
-    private String date;
+    @ExcelProperty("日期标题")
+    private Date date;
     /**
-     * 我想接收百分比的数字
+     * 我想写到excel 用百分比表示
      */
-    @ExcelProperty(value = "age", index = 1)
     @NumberFormat("#.##%")
-    private String doubleData;
+    @ExcelProperty(value = "数字标题")
+    private Double doubleData;
 }
